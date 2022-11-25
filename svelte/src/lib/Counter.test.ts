@@ -18,4 +18,15 @@ describe("Counter", () => {
         let text = await result.findByTestId("counter-value");
         expect(text.textContent).toEqual("1");
     })
+    it("dispatches a custom event when the button is clicked", async () => {
+        let eventWasCalled = false;
+        result.container.addEventListener("on-increment", () => {
+            eventWasCalled = true;
+        });
+
+        let button = await result.findByText("Increment");
+        await fireEvent.click(button);
+
+        expect(eventWasCalled).toEqual(true);
+    })
 })
